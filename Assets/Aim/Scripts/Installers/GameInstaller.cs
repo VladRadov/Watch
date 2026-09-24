@@ -1,3 +1,4 @@
+using Aim.Clock;
 using Aim.Time;
 using UnityEngine;
 using Zenject;
@@ -9,23 +10,37 @@ namespace Aim.Installers
         [SerializeField]
         private TimeSyncConfig _timeSyncConfig;
 
+        [SerializeField]
+        private ClockConfig _clockConfig;
+
         public override void InstallBindings()
         {
             Container.Bind<Bootstrap.Bootstrap>()
                 .FromComponentInHierarchy()
                 .AsSingle();
 
-            if (_timeSyncConfig == null)
-            {
-                Debug.LogError("[GameInstaller] TimeSyncConfig is not assigned.");
-            }
-            else
-            {
-                Container.BindInstance(_timeSyncConfig).AsSingle();
-            }
+            BindConfig(_timeSyncConfig, "TimeSyncConfig");
+            BindConfig(_clockConfig, "ClockConfig");
 
             Container.BindInterfacesAndSelfTo<TimeSyncService>()
                 .AsSingle();
+
+            Container.Bind<ClockModel>()
+                .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ClockService>()
+                .AsSingle();
+        }
+
+        private void BindConfig<T>(T config, string label) where T : ScriptableObject
+        {
+            if (config == null)
+            {
+                Debug.LogError($"[GameInstaller] {label} is not assigned.");
+                return;
+            }
+
+            Container.BindInstance(config).AsSingle();
         }
     }
 }
