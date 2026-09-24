@@ -102,7 +102,7 @@ namespace Aim.EditorTools
             titleRect.anchoredPosition = new Vector2(0f, 120f);
             titleRect.sizeDelta = new Vector2(800f, 80f);
             var titleText = title.AddComponent<Text>();
-            titleText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            titleText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             titleText.fontSize = 48;
             titleText.alignment = TextAnchor.MiddleCenter;
             titleText.color = Color.white;
@@ -113,7 +113,7 @@ namespace Aim.EditorTools
             statusRect.anchoredPosition = new Vector2(0f, 20f);
             statusRect.sizeDelta = new Vector2(800f, 50f);
             var statusText = status.AddComponent<Text>();
-            statusText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            statusText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             statusText.fontSize = 28;
             statusText.alignment = TextAnchor.MiddleCenter;
             statusText.color = Color.white;

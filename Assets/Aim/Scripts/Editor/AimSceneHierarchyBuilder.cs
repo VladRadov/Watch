@@ -100,7 +100,7 @@ namespace Aim.EditorTools
             digitalRect.anchoredPosition = new Vector2(0f, -420f);
             digitalRect.sizeDelta = new Vector2(500f, 80f);
             var digitalText = digital.AddComponent<Text>();
-            digitalText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            digitalText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             digitalText.fontSize = 48;
             digitalText.alignment = TextAnchor.MiddleCenter;
             digitalText.color = Color.white;
@@ -122,7 +122,7 @@ namespace Aim.EditorTools
             var input = inputGo.AddComponent<InputField>();
             var inputTextGo = CreateUiObject("Text", inputGo.transform);
             var inputText = inputTextGo.AddComponent<Text>();
-            inputText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            inputText.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             inputText.fontSize = 28;
             inputText.color = Color.white;
             inputText.supportRichText = false;
@@ -185,7 +185,7 @@ namespace Aim.EditorTools
             var button = go.AddComponent<Button>();
             var textGo = CreateUiObject("Label", go.transform);
             var text = textGo.AddComponent<Text>();
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
             text.fontSize = 28;
             text.alignment = TextAnchor.MiddleCenter;
             text.color = Color.white;
