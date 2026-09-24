@@ -17,6 +17,7 @@ namespace Aim.EditorTools
         private const string ClockConfigPath = "Assets/Aim/Configs/ClockConfig.asset";
 
         [MenuItem("Aim/Setup/Create Or Repair Game Scene Hierarchy")]
+        [MenuItem("Tools/Aim/Create Or Repair Game Scene Hierarchy")]
         public static void CreateOrRepairGameScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);

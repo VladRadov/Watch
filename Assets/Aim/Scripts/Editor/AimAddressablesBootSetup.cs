@@ -20,6 +20,7 @@ namespace Aim.EditorTools
         private const string LocalGroupName = "Local Game";
 
         [MenuItem("Aim/Setup/Configure Addressables For Game Scene")]
+        [MenuItem("Tools/Aim/Configure Addressables For Game Scene")]
         public static void ConfigureAddressables()
         {
             var settings = AddressableAssetSettingsDefaultObject.GetSettings(true);
@@ -52,7 +53,8 @@ namespace Aim.EditorTools
 
             var entry = settings.CreateOrMoveEntry(guid, group, false, false);
             entry.SetAddress(GameSceneAddress);
-            entry.SetLabel("Local", true, true, false);
+            settings.AddLabel("Local");
+            entry.SetLabel("Local", true, true);
 
             EditorUtility.SetDirty(settings);
             AssetDatabase.SaveAssets();
@@ -60,6 +62,7 @@ namespace Aim.EditorTools
         }
 
         [MenuItem("Aim/Setup/Create Boot Scene")]
+        [MenuItem("Tools/Aim/Create Boot Scene")]
         public static void CreateBootScene()
         {
             EnsureLoadingConfig();
