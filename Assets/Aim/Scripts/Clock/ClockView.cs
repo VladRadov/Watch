@@ -44,6 +44,10 @@ namespace Aim.Clock
         private readonly Subject<float> _minuteHandDragged = new Subject<float>();
         private readonly Subject<string> _keyboardTimeSubmitted = new Subject<string>();
 
+        private bool _isEditInteractionEnabled;
+
+        public bool IsEditInteractionEnabled => _isEditInteractionEnabled;
+
         public IObservable<Unit> EditClicked => _editClicked;
         public IObservable<Unit> SaveClicked => _saveClicked;
         public IObservable<Unit> CancelClicked => _cancelClicked;
@@ -98,6 +102,8 @@ namespace Aim.Clock
 
         public void SetEditModeVisual(bool isEditMode)
         {
+            _isEditInteractionEnabled = isEditMode;
+
             if (_editPanel != null)
             {
                 _editPanel.SetActive(isEditMode);

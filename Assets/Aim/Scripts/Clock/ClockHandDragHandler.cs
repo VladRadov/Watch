@@ -27,13 +27,18 @@ namespace Aim.Clock
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (_clockView == null || !_clockView.IsEditInteractionEnabled)
+            {
+                return;
+            }
+
             _isDragging = true;
             ApplyDrag(eventData);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (!_isDragging)
+            if (!_isDragging || _clockView == null || !_clockView.IsEditInteractionEnabled)
             {
                 return;
             }
