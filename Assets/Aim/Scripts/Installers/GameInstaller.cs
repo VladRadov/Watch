@@ -13,6 +13,9 @@ namespace Aim.Installers
         [SerializeField]
         private ClockConfig _clockConfig;
 
+        [SerializeField]
+        private ClockView _clockView;
+
         public override void InstallBindings()
         {
             Container.Bind<Bootstrap.Bootstrap>()
@@ -22,6 +25,15 @@ namespace Aim.Installers
             BindConfig(_timeSyncConfig, "TimeSyncConfig");
             BindConfig(_clockConfig, "ClockConfig");
 
+            if (_clockView == null)
+            {
+                Debug.LogError("[GameInstaller] ClockView is not assigned.");
+            }
+            else
+            {
+                Container.BindInstance(_clockView).AsSingle();
+            }
+
             Container.BindInterfacesAndSelfTo<TimeSyncService>()
                 .AsSingle();
 
@@ -29,6 +41,12 @@ namespace Aim.Installers
                 .AsSingle();
 
             Container.BindInterfacesAndSelfTo<ClockService>()
+                .AsSingle();
+
+            Container.Bind<ClockController>()
+                .AsSingle();
+
+            Container.BindInterfacesAndSelfTo<ClockPresentationService>()
                 .AsSingle();
         }
 
