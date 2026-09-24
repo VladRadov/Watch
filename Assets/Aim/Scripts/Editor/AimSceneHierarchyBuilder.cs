@@ -81,18 +81,17 @@ namespace Aim.EditorTools
             rootRect.anchorMax = new Vector2(0.5f, 0.5f);
             rootRect.sizeDelta = new Vector2(900f, 1400f);
 
-            CreateImage("Strap", root.transform, "Assets/Aim/Sprites/strap.png", new Vector2(420f, 1200f));
-            CreateImage("Case", root.transform, "Assets/Aim/Sprites/watch_case.png", new Vector2(620f, 620f));
-            CreateImage("Dial", root.transform, "Assets/Aim/Sprites/watch_dial.png", new Vector2(480f, 480f));
+            CreateImage("Strap", root.transform, "Assets/Aim/Sprites/strap.png", new Vector2(380f, 1100f));
+            CreateImage("Case", root.transform, "Assets/Aim/Sprites/watch_case.png", new Vector2(640f, 640f));
+            CreateImage("Dial", root.transform, "Assets/Aim/Sprites/watch_dial.png", new Vector2(420f, 420f));
 
-            var hour = CreateImage("HourHand", root.transform, "Assets/Aim/Sprites/hand_hour.png", new Vector2(36f, 160f));
-            var minute = CreateImage("MinuteHand", root.transform, "Assets/Aim/Sprites/hand_minute.png", new Vector2(28f, 220f));
-            var second = CreateImage("SecondHand", root.transform, "Assets/Aim/Sprites/hand_second.png", new Vector2(12f, 240f));
-            CreateImage("Pivot", root.transform, "Assets/Aim/Sprites/hand_pivot.png", new Vector2(40f, 40f));
+            var hour = CreateHandImage("HourHand", root.transform, "Assets/Aim/Sprites/hand_hour.png", new Vector2(28f, 150f));
+            var minute = CreateHandImage("MinuteHand", root.transform, "Assets/Aim/Sprites/hand_minute.png", new Vector2(18f, 200f));
+            var second = CreateHandImage("SecondHand", root.transform, "Assets/Aim/Sprites/hand_second.png", new Vector2(8f, 220f));
+            CreateImage("Pivot", root.transform, "Assets/Aim/Sprites/hand_pivot.png", new Vector2(28f, 28f));
 
-            // Wider hit targets for dragging hands in edit mode.
-            ExpandHandHitArea(hour, new Vector2(80f, 200f));
-            ExpandHandHitArea(minute, new Vector2(70f, 260f));
+            ExpandHandHitArea(hour, new Vector2(72f, 180f));
+            ExpandHandHitArea(minute, new Vector2(60f, 240f));
             second.GetComponent<Image>().raycastTarget = false;
 
             var digital = CreateUiObject("DigitalTime", root.transform);
@@ -150,6 +149,16 @@ namespace Aim.EditorTools
             AttachHandDrag(minute, clockView, ClockHandDragHandler.HandType.Minute, root.GetComponent<RectTransform>());
 
             return clockView;
+        }
+
+        private static GameObject CreateHandImage(string name, Transform parent, string spritePath, Vector2 size)
+        {
+            var go = CreateImage(name, parent, spritePath, size);
+            var rect = go.GetComponent<RectTransform>();
+            // Rotate around the base of the hand (center of the dial).
+            rect.pivot = new Vector2(0.5f, 0f);
+            rect.anchoredPosition = Vector2.zero;
+            return go;
         }
 
         private static void ExpandHandHitArea(GameObject hand, Vector2 size)
