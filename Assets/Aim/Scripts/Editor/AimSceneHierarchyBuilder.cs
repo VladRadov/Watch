@@ -89,6 +89,11 @@ namespace Aim.EditorTools
             var second = CreateImage("SecondHand", root.transform, "Assets/Aim/Sprites/hand_second.png", new Vector2(12f, 240f));
             CreateImage("Pivot", root.transform, "Assets/Aim/Sprites/hand_pivot.png", new Vector2(40f, 40f));
 
+            // Wider hit targets for dragging hands in edit mode.
+            ExpandHandHitArea(hour, new Vector2(80f, 200f));
+            ExpandHandHitArea(minute, new Vector2(70f, 260f));
+            second.GetComponent<Image>().raycastTarget = false;
+
             var digital = CreateUiObject("DigitalTime", root.transform);
             var digitalRect = digital.GetComponent<RectTransform>();
             digitalRect.anchoredPosition = new Vector2(0f, -420f);
@@ -140,7 +145,32 @@ namespace Aim.EditorTools
             viewSo.FindProperty("_editPanel").objectReferenceValue = editPanel;
             viewSo.ApplyModifiedPropertiesWithoutUndo();
 
+            AttachHandDrag(hour, clockView, ClockHandDragHandler.HandType.Hour, root.GetComponent<RectTransform>());
+            AttachHandDrag(minute, clockView, ClockHandDragHandler.HandType.Minute, root.GetComponent<RectTransform>());
+
             return clockView;
+        }
+
+        private static void ExpandHandHitArea(GameObject hand, Vector2 size)
+        {
+            var rect = hand.GetComponent<RectTransform>();
+            rect.sizeDelta = size;
+            hand.GetComponent<Image>().raycastTarget = true;
+        }
+
+        private static void AttachHandDrag(
+            GameObject hand,
+            ClockView clockView,
+            ClockHandDragHandler.HandType handType,
+            RectTransform dragArea)
+        {
+            var handler = hand.AddComponent<ClockHandDragHandler>();
+            var so = new SerializedObject(handler);
+            so.FindProperty("_clockView").objectReferenceValue = clockView;
+            so.FindProperty("_handType").enumValueIndex = (int)handType;
+            so.FindProperty("_handTransform").objectReferenceValue = hand.GetComponent<RectTransform>();
+            so.FindProperty("_dragArea").objectReferenceValue = dragArea;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static Button CreateButton(string name, Transform parent, string label, Vector2 anchoredPosition)
