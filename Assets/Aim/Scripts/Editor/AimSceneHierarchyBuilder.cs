@@ -87,12 +87,14 @@ namespace Aim.EditorTools
 
             var hour = CreateHandImage("HourHand", root.transform, "Assets/Aim/Sprites/hand_hour.png", new Vector2(28f, 150f));
             var minute = CreateHandImage("MinuteHand", root.transform, "Assets/Aim/Sprites/hand_minute.png", new Vector2(18f, 200f));
-            var second = CreateHandImage("SecondHand", root.transform, "Assets/Aim/Sprites/hand_second.png", new Vector2(8f, 220f));
+            var second = CreateHandImage("SecondHand", root.transform, "Assets/Aim/Sprites/hand_second.png", new Vector2(14f, 230f));
             CreateImage("Pivot", root.transform, "Assets/Aim/Sprites/hand_pivot.png", new Vector2(28f, 28f));
 
             ExpandHandHitArea(hour, new Vector2(72f, 180f));
             ExpandHandHitArea(minute, new Vector2(60f, 240f));
-            second.GetComponent<Image>().raycastTarget = false;
+            var secondImage = second.GetComponent<Image>();
+            secondImage.raycastTarget = false;
+            secondImage.color = new Color(1f, 0.22f, 0.22f, 1f);
 
             var digital = CreateUiObject("DigitalTime", root.transform);
             var digitalRect = digital.GetComponent<RectTransform>();
