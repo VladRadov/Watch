@@ -100,7 +100,7 @@ namespace Zenject.SpaceFighter
             var bullet = _bulletFactory.Create(
                 _settings.BulletSpeed, _settings.BulletLifetime, BulletTypes.FromEnemy);
 
-            // Randomize our aim a bit
+            // Randomize our Watch a bit
             var accuracy = Mathf.Clamp(_tunables.Accuracy, 0, 1);
             var maxError = 1.0f - accuracy;
             var error = Random.Range(0, maxError);
