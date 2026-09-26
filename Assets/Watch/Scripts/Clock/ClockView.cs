@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Watch.Common;
+
 using UniRx;
 
 namespace Watch.Clock
@@ -54,7 +56,7 @@ namespace Watch.Clock
         private Button _decreaseSecondsButton;
 
         [SerializeField]
-        private GameObject _editPanel;
+        private PanelAnimationView _editPanel;
 
         private const int HOURS_PER_CIRCLE = 12;
         private const float MILLISECONDS_PER_SECOND = 1000f;
@@ -163,7 +165,10 @@ namespace Watch.Clock
 
             if (_editPanel != null)
             {
-                _editPanel.SetActive(isEditMode);
+                if (isEditMode)
+                    _editPanel.Show();
+                else
+                    _editPanel.Hide();
             }
         }
 
