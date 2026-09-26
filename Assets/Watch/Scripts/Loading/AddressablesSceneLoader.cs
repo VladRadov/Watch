@@ -24,26 +24,16 @@ namespace Watch.Loading
         {
             if (_config == null)
             {
-                Debug.LogError("[AddressablesSceneLoader] LoadingConfig is not assigned.");
+                Debug.LogError(
+                    "[AddressablesSceneLoader] LoadingConfig is not assigned.");
                 return;
             }
 
-            _loadingView?.Show("Initializing Addressables...");
+            _loadingView?.Show("Loading game scene...");
+            _loadingView?.SetProgress(0f);
 
-            var initHandle = Addressables.InitializeAsync();
-            await UniTask.WaitUntil(() => initHandle.IsDone);
-
-            if (initHandle.Status != AsyncOperationStatus.Succeeded)
-            {
-                Debug.LogError("[AddressablesSceneLoader] Addressables initialization failed.");
-                _loadingView?.SetStatus("Addressables init failed");
-                return;
-            }
-
-            _loadingView?.SetStatus("Loading game scene...");
-            _loadingView?.SetProgress(0.25f);
-
-            var minimumDelayTask = UniTask.Delay(System.TimeSpan.FromSeconds(_config.MinimumLoadingSeconds));
+            var minimumDelayTask = UniTask.Delay(
+                System.TimeSpan.FromSeconds(_config.MinimumLoadingSeconds));
 
             var loadHandle = Addressables.LoadSceneAsync(
                 _config.GameSceneAddress,
@@ -52,7 +42,7 @@ namespace Watch.Loading
 
             while (!loadHandle.IsDone)
             {
-                _loadingView?.SetProgress(0.25f + loadHandle.PercentComplete * 0.75f);
+                _loadingView?.SetProgress(loadHandle.PercentComplete);
                 await UniTask.Yield();
             }
 
@@ -60,16 +50,12 @@ namespace Watch.Loading
 
             if (loadHandle.Status != AsyncOperationStatus.Succeeded)
             {
-                Debug.LogError($"[AddressablesSceneLoader] Failed to load scene '{_config.GameSceneAddress}'.");
-                _loadingView?.SetStatus("Scene load failed");
+                Debug.LogError(
+                    $"Failed to load '{_config.GameSceneAddress}': " +
+                    $"{loadHandle.OperationException}");
+
                 return;
             }
-
-            _loadingView?.SetProgress(1f);
-            _loadingView?.SetStatus("Ready");
-            _loadingView?.Hide();
-
-            Debug.Log($"[AddressablesSceneLoader] Scene '{_config.GameSceneAddress}' loaded.");
         }
     }
 }
