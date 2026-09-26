@@ -2590,7 +2590,7 @@ MonoBehaviour:
   _decreaseMinutesButton: {fileID: 59845581}
   _addSecondsButton: {fileID: 1263996500}
   _decreaseSecondsButton: {fileID: 2079709307}
-  _editPanel: {fileID: 509906412}
+  _editPanel: {fileID: 509906416}
 --- !u!224 &2080473345
 RectTransform:
   m_ObjectHideFlags: 0
